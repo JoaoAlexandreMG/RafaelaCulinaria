@@ -5,8 +5,6 @@ import requests
 from sqlalchemy import create_engine, text
 from random import randint
 
-from torch import rand
-
 app = Flask(__name__)
 
 
