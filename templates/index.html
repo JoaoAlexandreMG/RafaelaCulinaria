@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pedido de Cliente</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>Faça seu Pedido</h1>
+            <form id="pedidoForm" method="POST">
+                <textarea name="pedido" id="pedido" placeholder="Digite o pedido do cliente..." required></textarea>
+                <button type="submit">Enviar Pedido</button>
+            </form>
+            <div id="resultado" style="display: none;">
+                <h2>Resultado</h2>
+                <pre id="resultadoContent"></pre> <!-- Usar <pre> para manter a formatação -->
+                <button onclick="copiarParaAreaDeTransferencia()">Copiar Conteúdo</button>
+            </div>
+        </div>
+        <script>
+            document.getElementById('pedidoForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                let formData = new FormData(this);
+                fetch('/processar_pedido', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Exibir o texto formatado retornado pelo servidor
+                        document.getElementById('resultadoContent').innerText = data.texto_retorno;
+                        document.getElementById('resultado').style.display = 'block';
+                    })
+                    .catch(error => console.error('Erro:', error));
+            });
+
+            function copiarParaAreaDeTransferencia() {
+                const conteudo = document.getElementById('resultadoContent').innerText;
+                navigator.clipboard.writeText(conteudo)
+                    .then(() => {
+                        alert('Conteúdo copiado para a área de transferência!');
+                    })
+                    .catch(err => {
+                        console.error('Erro ao copiar para a área de transferência:', err);
+                    });
+            }
+        </script>
+    </body>
+
+</html>
