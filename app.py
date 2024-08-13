@@ -9,9 +9,7 @@ app = Flask(__name__)
 
 # Configuração da conexão com o banco de dados usando SQLAlchemy
 def conectar_bd():
-    DATABASE_URL = (
-        "postgresql+psycopg2://postgres:2584@localhost:5432/rafaela_culinaria"
-    )
+    DATABASE_URL = "postgresql://postgres.ienuuslxlelzyaadievb:C4fDYmwNVLJF9W@aws-0-sa-east-1.pooler.supabase.com:6543/postgres"
     engine = create_engine(DATABASE_URL, echo=True, client_encoding="utf8")
     return engine.connect()
 
