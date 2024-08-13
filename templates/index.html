@@ -43,7 +43,7 @@
                 <button type="submit">Enviar Pedido</button>
             </form>
             <div id="loader" class="loader hidden"></div>
-            <div id="resultado" style="display: none;">
+            <div id="resultado" class="hidden">
                 <h2>Resultado</h2>
                 <pre id="resultadoContent"></pre> <!-- Usar <pre> para manter a formatação -->
                 <button onclick="copiarParaAreaDeTransferencia()">Copiar Conteúdo</button>
@@ -63,11 +63,18 @@
                 })
                     .then(response => response.json())
                     .then(data => {
+                        // Ocultar a animação de carregamento
+                        document.getElementById('loader').classList.add('hidden');
+
                         // Exibir o texto formatado retornado pelo servidor
                         document.getElementById('resultadoContent').innerText = data.texto_retorno;
-                        document.getElementById('resultado').style.display = 'block';
+                        document.getElementById('resultado').classList.remove('hidden');
                     })
-                    .catch(error => console.error('Erro:', error));
+                    .catch(error => {
+                        console.error('Erro:', error);
+                        // Ocultar a animação de carregamento em caso de erro
+                        document.getElementById('loader').classList.add('hidden');
+                    });
             });
 
             function copiarParaAreaDeTransferencia() {
