@@ -2,3 +2,4 @@ Flask==2.3.3
 SQLAlchemy==2.0.12
 requests==2.31.0
 gunicorn==21.1.0
+psycopg2
