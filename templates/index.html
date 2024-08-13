@@ -5,34 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pedido de Cliente</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-        <style>
-            .loader {
-                border: 8px solid #f3f3f3;
-                /* Light grey */
-                border-top: 8px solid #3498db;
-                /* Blue */
-                border-radius: 50%;
-                width: 50px;
-                height: 50px;
-                animation: spin 1s linear infinite;
-                margin: 20px auto;
-            }
-
-            @keyframes spin {
-                0% {
-                    transform: rotate(0deg);
-                }
-
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-
-            .hidden {
-                display: none;
-            }
-        </style>
+        <link rel="stylesheet" href="../static/css/style.css">
     </head>
 
     <body>
@@ -47,9 +20,19 @@
                 <h2>Resultado</h2>
                 <pre id="resultadoContent"></pre> <!-- Usar <pre> para manter a formatação -->
                 <button onclick="copiarParaAreaDeTransferencia()">Copiar Conteúdo</button>
+                <button id="whatsappBtn">Enviar pelo WhatsApp</button>
+
             </div>
         </div>
         <script>
+            document.getElementById('whatsappBtn').addEventListener('click', function () {
+                const pedido = document.getElementById('resultadoContent').innerText;
+                const numeroWhatsApp = '5575992121110'; // Número de telefone no formato internacional
+                const mensagem = `Olá! Gerei meu pedido usando seu site, aqui está o pedido:%0A%0A${encodeURIComponent(pedido)}`;
+                const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+                window.open(url, '_blank');
+            });
+
             document.getElementById('pedidoForm').addEventListener('submit', function (event) {
                 event.preventDefault();
 

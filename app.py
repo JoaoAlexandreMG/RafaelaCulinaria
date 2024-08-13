@@ -3,6 +3,9 @@ import ast
 import json
 import requests
 from sqlalchemy import create_engine, text
+from random import randint
+
+from torch import rand
 
 app = Flask(__name__)
 
@@ -188,7 +191,7 @@ def processar_pedido():
     subtotais = processar_string_entrada(texto_resposta)
     total = sum(item["subtotal"] for item in subtotais)
     # Formatação personalizada do pedido
-    pedido_formatado = "---\nPedido de Salgados - Rafaela Culinária\n\n"
+    pedido_formatado = f"Pedido {randint(10000, 99999)} - Rafaela Culinária\n\n"
     for idx, item in enumerate(subtotais, start=1):
         pedido_formatado += f"{idx}. {item['produto']}\n"
         pedido_formatado += f"   - Quantidade: {item['quantidade']} unidades\n"
